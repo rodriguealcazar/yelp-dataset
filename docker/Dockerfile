@@ -20,11 +20,11 @@ RUN \
   rm -rf /var/cache/oracle-jdk${JAVA_MAJOR_VERSION}-installer
 
 # SPARK
-ENV SPARK_VERSION 2.3.2
+ENV SPARK_VERSION 2.1.3
 ENV SPARK_PACKAGE spark-${SPARK_VERSION}-bin-hadoop2.7
 ENV SPARK_HOME /usr/spark-${SPARK_VERSION}
 ENV PATH $PATH:${SPARK_HOME}/bin
-RUN wget -nv http://apache.rediris.es/spark/spark-${SPARK_VERSION}/${SPARK_PACKAGE}.tgz && \
+RUN wget -nv https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/${SPARK_PACKAGE}.tgz && \
     tar -zxvf ${SPARK_PACKAGE}.tgz && \
     rm -rf spark-${SPARK_VERSION}/${SPARK_PACKAGE}.tgz && \
     mv /tmp/$SPARK_PACKAGE $SPARK_HOME
@@ -41,6 +41,8 @@ RUN wget -nv http://archive.apache.org/dist/zeppelin/zeppelin-${ZEPPELIN_VERSION
     mv zeppelin-${ZEPPELIN_VERSION}-bin-netinst ${ZEPPELIN_HOME} && \
     echo "tail -F /${ZEPPELIN_HOME}/logs/*" >> ${ZEPPELIN_HOME}/bin/zeppelin-daemon.sh
 
-EXPOSE 8080 7077
+COPY notebook ${ZEPPELIN_HOME}/notebook
+
+EXPOSE 8080 7077 4040
 
 CMD ["/usr/zeppelin/bin/zeppelin-daemon.sh", "start"]
