@@ -179,3 +179,28 @@ executors in 2 separate threads.
 Once the app has finished, the path to the result file will be displayed.
 I had no time to look into ownership of the mounted volume so you will need
 `sudo` to access the result file.
+
+## Future work
+
+In a real life situation, there are a few things that would have to be done
+differently:
+
+ * dataset would live on shared storage like HDFS or S3 (or similar)
+ * dataset would be larger and Spark config would have to be tested and tuned
+ to make sure the job works and performs (number of executors, memory, 
+ partitions, ...)
+ * dataset would have to be analyzed and cleaned up to optimize its usefulness
+ * sample dataset would be created to use in the integration test to make sure
+ the application gives the expected results
+ * unit tests would be written for every SQL query
+ 
+As for answering the other questions, new classes simialar to `BusinessDataset`
+would be created to run the required queries. In terms of logic:
+
+ * businesses opened after 21:00 could be done by looking at each day's closing
+ hours and keeping the max and then counting the number of businesses where the
+ max is after 21:00. This would again require exploding the hours into rows.
+ * business with highest number of cool reviews would require loading the review
+ dataset and joining it with the businesses on the business id. Once done it is
+ simply a question of summing the cools grouping by business, state and city and
+ getting the max.
