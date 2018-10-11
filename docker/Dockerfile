@@ -42,7 +42,7 @@ RUN wget -nv http://archive.apache.org/dist/zeppelin/zeppelin-${ZEPPELIN_VERSION
     echo "tail -F /${ZEPPELIN_HOME}/logs/*" >> ${ZEPPELIN_HOME}/bin/zeppelin-daemon.sh
 
 COPY notebook ${ZEPPELIN_HOME}/notebook
-COPY yelp_academic_dataset_business.json /tmp/
+COPY yelp_academic_dataset_business.json.gz /tmp/
 
 EXPOSE 8080 4040 4041
 

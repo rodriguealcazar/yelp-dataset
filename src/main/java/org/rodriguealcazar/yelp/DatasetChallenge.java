@@ -19,7 +19,7 @@ public class DatasetChallenge {
                 .getOrCreate();
 
         try {
-            new DatasetChallenge("file:///tmp/yelp_academic_dataset_business.json").run(spark);
+            new DatasetChallenge("file:///tmp/yelp_academic_dataset_business.json.gz").run(spark);
         } finally {
             spark.stop();
         }

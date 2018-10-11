@@ -32,6 +32,6 @@ public class DatasetChallengeIT {
         //   * pass the path to the DatasetChallenge constructor
         //   * run the job
         //   * read the output and compare the result with the expected result
-        new DatasetChallenge("file:///tmp/yelp_academic_dataset_business.json").run(spark);
+        new DatasetChallenge("file:///tmp/yelp_academic_dataset_business.json.gz").run(spark);
     }
 }
