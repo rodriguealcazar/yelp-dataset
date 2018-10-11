@@ -26,7 +26,7 @@ ENV SPARK_HOME /usr/spark-${SPARK_VERSION}
 ENV PATH $PATH:${SPARK_HOME}/bin
 RUN wget -nv https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/${SPARK_PACKAGE}.tgz && \
     tar -zxvf ${SPARK_PACKAGE}.tgz && \
-    rm -rf spark-${SPARK_VERSION}/${SPARK_PACKAGE}.tgz && \
+    rm -rf ${SPARK_PACKAGE}.tgz && \
     mv /tmp/$SPARK_PACKAGE $SPARK_HOME
 
 # Zeppelin
@@ -42,7 +42,8 @@ RUN wget -nv http://archive.apache.org/dist/zeppelin/zeppelin-${ZEPPELIN_VERSION
     echo "tail -F /${ZEPPELIN_HOME}/logs/*" >> ${ZEPPELIN_HOME}/bin/zeppelin-daemon.sh
 
 COPY notebook ${ZEPPELIN_HOME}/notebook
+COPY yelp_academic_dataset_business.json /tmp/
 
-EXPOSE 8080 7077 4040
+EXPOSE 8080 4040 4041
 
 CMD ["/usr/zeppelin/bin/zeppelin-daemon.sh", "start"]
